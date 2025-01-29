@@ -1,90 +1,54 @@
-class Event {
-    constructor(name, startTime, endTime) {
-        this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
+let todos = [];
+
+function addTodo() {
+    const input = document.getElementById('todoInput');
+    const text = input.value.trim();
+    
+    if (text) {
+        todos.push({
+            id: Date.now(),
+            text: text,
+            completed: false
+        });
+        input.value = '';
+        renderTodos();
     }
 }
 
-class EventScheduler {
-    constructor() {
-        this.events = [];
-    }
-
-    addEvent(event) {
-        this.events.push(event);
-        this.events.sort((a, b) => a.startTime.localeCompare(b.startTime));
-        return this.checkConflicts();
-    }
-
-    checkConflicts() {
-        const conflicts = [];
-        for (let i = 0; i < this.events.length - 1; i++) {
-            if (this.events[i].endTime > this.events[i + 1].startTime) {
-                conflicts.push({
-                    event1: this.events[i],
-                    event2: this.events[i + 1]
-                });
-            }
-        }
-        return conflicts;
-    }
+function toggleTodo(id) {
+    todos = todos.map(todo => 
+        todo.id === id ? {...todo, completed: !todo.completed} : todo
+    );
+    renderTodos();
 }
 
-const scheduler = new EventScheduler();
+function deleteTodo(id) {
+    todos = todos.filter(todo => todo.id !== id);
+    renderTodos();
+}
 
-document.getElementById('eventForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+function renderTodos() {
+    const todoList = document.getElementById('todoList');
+    todoList.innerHTML = '';
     
-    const name = document.getElementById('eventName').value;
-    const startTime = document.getElementById('startTime').value;
-    const endTime = document.getElementById('endTime').value;
+    todos.forEach(todo => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <input 
+                type="checkbox" 
+                ${todo.completed ? 'checked' : ''} 
+                onchange="toggleTodo(${todo.id})"
+            >
+            <span class="${todo.completed ? 'completed' : ''}">${todo.text}</span>
+            <button onclick="deleteTodo(${todo.id})">Delete</button>
+        `;
+        todoList.appendChild(li);
+    });
+}
 
-    if (startTime >= endTime) {
-        alert('End time must be after start time');
-        return;
+// Allow adding todos with Enter key
+document.getElementById('todoInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        addTodo();
     }
-
-    const event = new Event(name, startTime, endTime);
-    const conflicts = scheduler.addEvent(event);
-    
-    updateEventList();
-    updateConflictList(conflicts);
-    
-    this.reset();
 });
-
-function updateEventList() {
-    const eventList = document.getElementById('eventList');
-    eventList.innerHTML = '';
-    
-    scheduler.events.forEach(event => {
-        const eventDiv = document.createElement('div');
-        eventDiv.className = 'event';
-        eventDiv.innerHTML = `
-            <strong>${event.name}</strong><br>
-            Start: ${formatTime(event.startTime)} - End: ${formatTime(event.endTime)}
-        `;
-        eventList.appendChild(eventDiv);
-    });
-}
-
-function updateConflictList(conflicts) {
-    const conflictList = document.getElementById('conflictList');
-    conflictList.innerHTML = '';
-    
-    conflicts.forEach(conflict => {
-        const conflictDiv = document.createElement('div');
-        conflictDiv.className = 'conflict';
-        conflictDiv.innerHTML = `
-            Conflict between:<br>
-            "${conflict.event1.name}" (${formatTime(conflict.event1.startTime)} - ${formatTime(conflict.event1.endTime)}) and<br>
-            "${conflict.event2.name}" (${formatTime(conflict.event2.startTime)} - ${formatTime(conflict.event2.endTime)})
-        `;
-        conflictList.appendChild(conflictDiv);
-    });
-}
-
-function formatTime(time) {
-    return time.slice(0, 5);
-}

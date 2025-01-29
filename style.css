@@ -1,80 +1,87 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    padding: 20px;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
     background-color: white;
-    padding: 20px;
+    padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 2rem;
+    width: 100%;
+    max-width: 500px;
 }
 
 h1 {
     text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+    color: #1a73e8;
+    margin-bottom: 1.5rem;
 }
 
-h2 {
-    color: #444;
-    margin-bottom: 15px;
-}
-
-.add-event {
-    margin-bottom: 30px;
-}
-
-form {
-    display: grid;
-    gap: 10px;
+.input-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 input {
-    padding: 8px;
+    flex: 1;
+    padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 1rem;
 }
 
 button {
-    padding: 10px;
-    background-color: #4CAF50;
+    padding: 0.5rem 1rem;
+    background-color: #1a73e8;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 1rem;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #1557b0;
 }
 
-.schedule, .conflicts {
-    margin-top: 20px;
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.event {
+li {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
     background-color: #f8f9fa;
-    padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
     border-radius: 4px;
-    border-left: 4px solid #4CAF50;
+    gap: 0.5rem;
 }
 
-.conflict {
-    background-color: #fff3f3;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border-left: 4px solid #dc3545;
+li span {
+    flex: 1;
+}
+
+li button {
+    background-color: #dc3545;
+    padding: 0.25rem 0.5rem;
+}
+
+li button:hover {
+    background-color: #bb2d3b;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #6c757d;
 }

@@ -3,32 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Scheduler</title>
+    <title>Todo List</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Event Scheduler</h1>
-        
-        <div class="add-event">
-            <h2>Add New Event</h2>
-            <form id="eventForm">
-                <input type="text" id="eventName" placeholder="Event Name" required>
-                <input type="time" id="startTime" required>
-                <input type="time" id="endTime" required>
-                <button type="submit">Add Event</button>
-            </form>
+        <h1>Todo List</h1>
+        <div class="input-container">
+            <input type="text" id="todoInput" placeholder="Add a new task...">
+            <button onclick="addTodo()">Add</button>
         </div>
-
-        <div class="schedule">
-            <h2>Schedule</h2>
-            <div id="eventList"></div>
-        </div>
-
-        <div class="conflicts">
-            <h2>Conflicts</h2>
-            <div id="conflictList"></div>
-        </div>
+        <ul id="todoList"></ul>
     </div>
     <script src="main.js"></script>
 </body>
